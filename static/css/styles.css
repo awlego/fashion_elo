@@ -1,0 +1,17 @@
+.image-container {
+    display: inline-block;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px;
+}
+
+img {
+    width: 300px; /* Or any other preferred width */
+    height: auto;
+    cursor: pointer;
+    border: 3px solid transparent;
+}
+
+img.selected {
+    border: 3px solid red; /* Highlight the selected image */
+}

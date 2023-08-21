@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Comparison</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+<body>
+    <div class="image-container" onclick="selectImage('image1')">
+        <img id="image1" src="{{ url_for('static', filename='images/4112950_799972.webp') }}" alt="Image 1">
+    </div>
+    
+    <div class="image-container" onclick="selectImage('image2')">
+        <img id="image2" src="{{ url_for('static', filename='images/6461861_1314016.jpg') }}" alt="Image 2">
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
