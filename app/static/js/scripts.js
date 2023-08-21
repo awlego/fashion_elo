@@ -9,16 +9,19 @@ function selectImage(imageId) {
     const selectedImage = document.getElementById(imageId);
     selectedImage.classList.add('selected');
 
-    // Make an AJAX call to the backend to record the selection
-    fetch('/record', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ selected_image: imageId })
-    })
+    // Make an AJAX call to the backend to get two new random images
+    fetch(`/select_image/${imageId}`)
     .then(response => response.json())
     .then(data => {
-        console.log(data.message);  // Log the server's response
+        updateDisplayedImages(data);
     });
+}
+
+function updateDisplayedImages(imageData) {
+    const images = document.querySelectorAll('.image-container img');
+    images[0].src = imageData[0].path;
+    images[0].id = imageData[0].id;
+    
+    images[1].src = imageData[1].path;
+    images[1].id = imageData[1].id;
 }

@@ -4,14 +4,16 @@ import os
 from datetime import datetime
 
 # Local application imports
-from app import app, db  # <-- Make sure to import 'app' here
-from models import Image
+from app import create_app, db
+from app.models.models import Image
 
 def compute_image_uid(image_path):
     with open(image_path, 'rb') as f:
         return hashlib.md5(f.read()).hexdigest()
+    
+app = create_app()
 
-IMAGES_DIR = "static/images/"
+IMAGES_DIR = "app/static/images/"
 
 # Get all files from the directory
 all_images = [os.path.join(IMAGES_DIR, filename) for filename in os.listdir(IMAGES_DIR) if filename.endswith(('.png', '.jpg', '.jpeg', 'webp'))]  # you can add more image formats if needed
@@ -19,12 +21,14 @@ all_images = [os.path.join(IMAGES_DIR, filename) for filename in os.listdir(IMAG
 # Now loop through the images and add them to the database
 with app.app_context():
     for image_path in all_images:
+        db_image_path = image_path.removeprefix(IMAGES_DIR)
+        print(db_image_path)
         image_uid = compute_image_uid(image_path)
 
         # Check if the UID already exists
         existing_image = Image.query.filter_by(uid=image_uid).first()
         if not existing_image:
-            new_image = Image(uid=image_uid, filepath=image_path)
+            new_image = Image(uid=image_uid, filepath=db_image_path)
             db.session.add(new_image)
 
     # Commit the changes once all images have been processed

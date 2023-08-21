@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Selection</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <img id="image1" src="" alt="Random Image 1" width="300px" style="cursor:pointer;" onclick="handleImageClick(this)">
+    <img id="image2" src="" alt="Random Image 2" width="300px" style="cursor:pointer;" onclick="handleImageClick(this)">
+
+    <script>
+        const staticDir = '/static/images/';  // assuming your static folder is named 'static'
+
+        function setImages(data) {
+            console.log("Data received:", data); // Debug statement
+            console.log('Set Image1 ID:', staticDir + data[0].path);
+            console.log('Set Image2 ID:', staticDir + data[1].path);
+            console.log('Set Image1 uid:', data[0].uid);
+            $('#image1').attr('src', staticDir + data[0].path).data('data-id', data[0].uid);
+            $('#image2').attr('src', staticDir + data[1].path).data('data-id', data[1].uid);
+        }
+
+        function fetchImages() {
+            $.get('/get_two_random_images', function(data) {
+                setImages(data);
+            });
+        }
+
+        function handleImageClick(imageElement) {
+            const jqImage = $(imageElement);  // Wrap the DOM element with jQuery
+            const selectedImageId = jqImage.data('data-id');
+            
+            console.log('Clicked imageElement:', imageElement);
+            console.log('Clicked jqImage:', jqImage);
+            console.log('Clicked selectedImageId:', selectedImageId);
+
+            $.get('/select_image/' + selectedImageId, function(data) {
+                setImages(data);
+            });
+        }
+
+        $(document).ready(function() {
+            fetchImages();
+        });
+    </script>
+</body>
+
+</html>
