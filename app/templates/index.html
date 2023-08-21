@@ -31,15 +31,21 @@
         }
 
         function handleImageClick(imageElement) {
-            const jqImage = $(imageElement);  // Wrap the DOM element with jQuery
+            const jqImage = $(imageElement);
             const selectedImageId = jqImage.data('data-id');
-            
-            console.log('Clicked imageElement:', imageElement);
-            console.log('Clicked jqImage:', jqImage);
-            console.log('Clicked selectedImageId:', selectedImageId);
+            const otherImageElement = imageElement.id === "image1" ? $('#image2') : $('#image1');
+            const unselectedImageId = otherImageElement.data('data-id');
+           
+            console.log(JSON.stringify({ selected: selectedImageId, unselected: unselectedImageId }))
 
-            $.get('/select_image/' + selectedImageId, function(data) {
-                setImages(data);
+            $.ajax({
+                url: '/select_image',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ selected: selectedImageId, unselected: unselectedImageId }),
+                success: function(data) {
+                    setImages(data);
+                }
             });
         }
 
