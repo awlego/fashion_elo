@@ -1,0 +1,6 @@
+env3.10/
+.DS_Store
+*.pyc
+__pycache__/
+*.sqlite 
+static/images/
