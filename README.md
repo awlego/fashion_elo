@@ -1,7 +1,7 @@
 # Fashion Elo
 A demo project playing around with javascript, web apps, and backend databases.
 
-A simple web app that displays two images at a time and lets the user vote for a winner. These votes are ranked using a Elo calculation. You can see the rankings on a seperate page. 
+A simple web app that displays two images at a time and lets the user vote for a winner. These votes are ranked using an Elo calculation. You can see the rankings on a seperate page. 
 
 The votes and rankings are stored in a SQLite database and managed using python scripts. The frontend uses Flask and html.
 
@@ -9,6 +9,7 @@ The votes and rankings are stored in a SQLite database and managed using python 
 Create virtual environment and install the required software
 ```
 python3.10 -m venv env3.10
+source env3.10/bin/activate
 pip install -r requirements.txt
 ```
 Setup the databases:
@@ -27,8 +28,6 @@ python add_images.py
 
 # Running the app:
 ```
-source env3.10/bin/activate
-
 python run.py
 ```
 Visit http://127.0.0.1:5000/ to see the voting page. You should see a pair of images. Click on one to register your vote.
